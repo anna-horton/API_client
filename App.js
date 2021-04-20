@@ -3,27 +3,23 @@ import React, {useState} from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function App() {
-  const [sqrtNumber, setSqrtNumber] = useState('')
-  const [userInput, onUserInput] = useState('')
-  function count(){
-    console.log(sqrtNumber)
-    let a = Number(userInput)
-    a = Math.sqrt(a)
-    setSqrtNumber(a.toString())
-    
-    //onUserInput(userInput)
-    
+  const [anectod, setAnectod] = useState('')
+  function getAn(){
+      fetch('https://icanhazdadjoke.com/slack').then(res => res.json()).then(res => {
+        setAnectod(res.attachments[0].text)
+        console.log(res.attachments[0].text)
+      })
+
   }
   return (
     <View style={styles.container}>
       <View style={styles.navbar}>
-        <Text style={styles.navbarText}>SQRT</Text>
+        <Text style={styles.navbarText}>ANECTOD</Text>
       </View>
-      <Text style={styles.text}>Write smt</Text>
-      <TextInput keyboardType="numeric" value={userInput} onChangeText={onUserInput} style={styles.TextIn}/>
+      <Text style={styles.text}></Text>
       <StatusBar style="auto" />
-      <Button title="Count" onPress={count}/>
-      {sqrtNumber ? <Text style={styles.text}>Ваш квадратный корень: {sqrtNumber}</Text> :<Text></Text>}
+      <Button title="Get anectod" onPress={getAn}/>
+      {anectod ? <Text style={styles.text}>Ваш анекдот: {anectod}</Text> :<Text></Text>}
     </View>
   );
 }
